@@ -1,0 +1,6 @@
+build/
+nibar
+*.o
+*.bak
+*.orig
+*.tmp

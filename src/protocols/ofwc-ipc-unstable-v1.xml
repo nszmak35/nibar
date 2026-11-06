@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<protocol name="ofwc_ipc_unstable_v1">
+  <description summary="ofwc extras for status bars (used by nibar)">
+    Things a status bar needs that dwl-ipc-unstable-v2 does not carry: the
+    keyboard layouts and a way to run one of the compositor's own actions
+    (the ones of the "keys" list, such as togglefloating). It is optional:
+    a bar must work without it, only without these two features.
+
+    Warning! This protocol is experimental and backward incompatible changes
+    may be made.
+  </description>
+
+  <interface name="zofwc_ipc_v1" version="1">
+    <description summary="ofwc extras for status bars">
+      Exposed as a global. After binding the client receives keyboard_layouts
+      and keyboard_layout; both are sent again whenever they change.
+    </description>
+
+    <request name="destroy" type="destructor">
+      <description summary="release the object"/>
+    </request>
+
+    <event name="keyboard_layouts">
+      <description summary="the keyboard layouts">
+        The xkb layouts of the keyboard, in order, separated by commas
+        ("us,ru"). Variants in parentheses ("us(intl)") may be present.
+      </description>
+      <arg name="layouts" type="string"/>
+    </event>
+
+    <event name="keyboard_layout">
+      <description summary="the active keyboard layout">
+        Index in the list of keyboard_layouts of the layout in use.
+      </description>
+      <arg name="index" type="uint"/>
+    </event>
+
+    <request name="set_keyboard_layout">
+      <description summary="switch the keyboard layout">
+        An index outside of the list is ignored.
+      </description>
+      <arg name="index" type="uint"/>
+    </request>
+
+    <request name="action">
+      <description summary="run an action of the compositor">
+        Runs the action with this name and argument as if a key bound to it was
+        pressed, on the monitor of `output` if there is one. Unknown actions
+        are ignored; "spawn" and "moveresize" are not available.
+      </description>
+      <arg name="name" type="string"/>
+      <arg name="argument" type="string" allow-null="true"/>
+      <arg name="output" type="object" interface="wl_output" allow-null="true"/>
+    </request>
+  </interface>
+</protocol>
