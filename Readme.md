@@ -18,24 +18,6 @@ way.
   goes away, a surface the compositor closes, a bad config or a command that dies only
   make the bar skip that part.
 
-## IPC
-
-| protocol | needed | used for |
-| --- | --- | --- |
-| `wlr-layer-shell-unstable-v1` | yes | the bar itself |
-| `dwl-ipc-unstable-v2` | for tags and window title | tags, focused window (title, app id), layout, fullscreen, `toggle_visibility`; view tags / move the window to tags |
-| `ofwc-ipc-unstable-v1` | optional | keyboard layouts and switching, `ofwc:` actions |
-
-Without `ofwc-ipc` the bar still works; only the `keyboard` element (it hides itself)
-and `ofwc:` clicks are missing. Any compositor that serves `dwl-ipc-unstable-v2` and
-`wlr-layer-shell` can run nibar — a neuswc window manager such as hevel only needs to
-implement `dwl-ipc-unstable-v2` (the protocol solux serves for waybar) to get the tags
-and the title.
-
-While a window is fullscreen on an output, the bar of that output drops to the
-`bottom` layer (below the windows) and keeps its room, so the tiles do not move. The
-compositor's `togglebar` action hides or shows the bars (`toggle_visibility`).
-
 ## Build and install
 
 Needs `wayland-client` (with `wayland-scanner`), neuwld (`wld.pc`, it comes with
