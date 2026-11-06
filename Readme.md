@@ -1,4 +1,4 @@
-# nibar — Neuswc Ipc Bar
+# nibar - Neuswc Ipc Bar
 
 A small status bar for ofwc and other neuswc window managers. It is an
 ordinary `wlr-layer-shell` client: the compositor draws nothing for it. What the bar
